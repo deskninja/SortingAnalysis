@@ -11,13 +11,13 @@ import components.simplewriter.SimpleWriter1L;
 /**
  * Various utility methods for Sorting analysis.
  * 
- * @author Joshua Wells and Jonathan Oliveros
+ * @author Joshua Wells, Jonathan Oliveros
  *
  */
 public final class SortUtils {
 
-	
-	
+
+
   /**
    * Sole constructor -- making it private ensures this class cannot be
    * instantiated.
@@ -61,7 +61,6 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     boolean isSorted = true;
     int index = 0;
-    
     while(isSorted) {
     	if(list.get(index).compareTo(list.get(index+1)) > 0)
     		isSorted = false;
@@ -80,16 +79,16 @@ public final class SortUtils {
    */
   public static List<Integer> listOfRandomInts(int count) {
     assert count >= 0 : "Violation of count >= 0";
-    
+
     List<Integer> listOfInts = new ArrayList<>();
-    
+
     Random rand = new Random();
-    
+
     for(int i = 0; i < count; i++) {
-    	Integer nextInt = rand.nextInt();;
+    	int nextInt = rand.nextInt();
     	listOfInts.add(nextInt);
     }
-    
+
     return listOfInts; 
   }
 
@@ -104,11 +103,12 @@ public final class SortUtils {
    */
   public static List<Integer> listOfSortedInts(int count) {
     assert count >= 0 : "Violation of count >= 0";
-    
+
     List<Integer> sortedInts = new ArrayList<>();
-    sortedInts = listOfRandomInts(count);
-    
-    return null; 
+    for(int i = 1; i < i + 1; i++) {
+    	sortedInts.add(i);
+    }
+    return sortedInts; 
   }
 
   /**
@@ -122,8 +122,11 @@ public final class SortUtils {
    */
   public static List<Integer> listOfReversedSortedInts(int count) {
     assert count >= 0 : "Violation of count >= 0";
-
-    return null; // FIXME implement
+    List<Integer> reverseSorted = new ArrayList<>();
+    for(int i = count + 1; i > 1; i--) {
+    	reverseSorted.add(i);
+    }
+    return reverseSorted;
   }
 
   /**
@@ -139,10 +142,11 @@ public final class SortUtils {
    */
   public static List<Integer> listOfDuplicateInts(int count, int element) {
     assert count >= 0 : "Violation of count >= 0";
-
-    
-    
-    return null;
+    List<Integer> duplicates = new ArrayList<>();
+    for(int i = 0; i < count; i++) {
+    	duplicates.add(element);
+    }
+    return duplicates;
   }
 
   /**
@@ -162,9 +166,9 @@ public final class SortUtils {
       List<Integer> list) {
     assert sortRoutine != null : "Violation of: sortRoutine not null";
     assert list != null : "Violation of: list is not null";
-    
+
     long start = System.nanoTime();
-    
+    sortRoutine.sort(list);
     long stop = System.nanoTime();
 
     return stop - start; 
@@ -201,8 +205,8 @@ public final class SortUtils {
     out.println(sortRoutine.name() + " (Expected runtime: "
         + sortRoutine.getExpectedComplexityClass() + ")");
     out.println("=============================================");
-    
-    
+
+
 
     out.println("=============================================");
     out.close();
