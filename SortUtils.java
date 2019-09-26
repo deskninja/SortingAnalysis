@@ -11,7 +11,7 @@ import components.simplewriter.SimpleWriter1L;
 /**
  * Various utility methods for Sorting analysis.
  * 
- * @author Joshua Wells, Jonathan Oliveros
+ * @author Joshua Wells and Jonathan Oliveros
  *
  */
 public final class SortUtils {
@@ -61,6 +61,7 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     boolean isSorted = true;
     int index = 0;
+    
     while(isSorted) {
     	if(list.get(index).compareTo(list.get(index+1)) > 0)
     		isSorted = false;
@@ -85,7 +86,7 @@ public final class SortUtils {
     Random rand = new Random();
     
     for(int i = 0; i < count; i++) {
-    	int nextInt = rand.nextInt();
+    	Integer nextInt = rand.nextInt();;
     	listOfInts.add(nextInt);
     }
     
@@ -105,10 +106,9 @@ public final class SortUtils {
     assert count >= 0 : "Violation of count >= 0";
     
     List<Integer> sortedInts = new ArrayList<>();
-    for(int i = 1; i < i + 1; i++) {
-    	sortedInts.add(i);
-    }
-    return sortedInts; 
+    sortedInts = listOfRandomInts(count);
+    
+    return null; 
   }
 
   /**
@@ -122,11 +122,8 @@ public final class SortUtils {
    */
   public static List<Integer> listOfReversedSortedInts(int count) {
     assert count >= 0 : "Violation of count >= 0";
-    List<Integer> reverseSorted = new ArrayList<>();
-    for(int i = count + 1; i > 1; i--) {
-    	reverseSorted.add(i);
-    }
-    return reverseSorted;
+
+    return null; // FIXME implement
   }
 
   /**
@@ -142,11 +139,10 @@ public final class SortUtils {
    */
   public static List<Integer> listOfDuplicateInts(int count, int element) {
     assert count >= 0 : "Violation of count >= 0";
-    List<Integer> duplicates = new ArrayList<>();
-    for(int i = 0; i < count; i++) {
-    	duplicates.add(element);
-    }
-    return duplicates;
+
+    
+    
+    return null;
   }
 
   /**
@@ -168,7 +164,7 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     
     long start = System.nanoTime();
-    sortRoutine.sort(list);
+    
     long stop = System.nanoTime();
 
     return stop - start; 
