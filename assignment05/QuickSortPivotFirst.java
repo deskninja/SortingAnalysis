@@ -15,15 +15,20 @@ import java.util.List;
 public class QuickSortPivotFirst<T extends Comparable<? super T>>
     extends AbstractQuickSort<T> {
 
-  // TODO add constructor
+	public QuickSortPivotFirst() {
+		this.name = "QuickSortPivotFirst";
+	    this.complexity = ComplexityClass.NLOGN;
+	}
 
-  @Override
-  protected T pivot(List<T> list, int start, int end) {
-    assert list != null : "Violation of: list is not null";
-    return null; // FIXME
-  }
+	@Override
+	protected T pivot(List<T> list, int start, int end) {
+		assert list != null : "Violation of: list is not null";
+		//set the pivot to list(0) then swap the array with the last number sorted lower than it
+		//recurse left and right side
+		return null; // FIXME
+	}
   
-  // TODO Override other methods if required
-  // TODO Add private helper methods as needed
+	// TODO Override other methods if required
+	// TODO Add private helper methods as needed
 
 }

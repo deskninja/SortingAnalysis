@@ -16,7 +16,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	
 	private int insertionSortThreshold;
 	
-	private void insertionSort(List<T> list1, List<T> list2){
+	public void insertionSort(List<T> list1, List<T> list2){
 		boolean sorted = false;
 		int index = 0;
 		for(T item: list2) {
@@ -35,26 +35,20 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	}
 	
 	private void sortRecursive(List<T> list) {
-		System.out.println(list.toString() + " list after sort");
 		if(list.size() > 1) {
     		List<T> firstHalf = new ArrayList<>(); //first half of {@code list}
     		firstHalf = partOfList(list, 0, list.size()/2);
-    		System.out.println(list.toString() + " list");
-    		System.out.println(firstHalf.toString() + " fistHalf");
     		sortRecursive(firstHalf);
-    		System.out.println(firstHalf.toString() + " firstHalf after sort");
-    		System.out.println();
-    		List<T> secondHalf = new ArrayList<>(); //second hald of {@code list}
+    		
+    		List<T> secondHalf = new ArrayList<>(); //second half of {@code list}
     		secondHalf = partOfList(list, list.size()/2, list.size());
-    		System.out.println(list.toString() + " list");
-    		System.out.println(secondHalf.toString() + " secondHalf");
     		sortRecursive(secondHalf);
-    		System.out.println(secondHalf.toString() + " secondHalf after sort");
+    		
     		insertionSort(firstHalf, secondHalf);
     	}
 	}
 	
-	private List<T> partOfList(List<T> list, int beginIndex, int endIndex){
+	public List<T> partOfList(List<T> list, int beginIndex, int endIndex){
 		List<T> half = new ArrayList<>();
 		while(beginIndex < endIndex) {
 			half.add(list.get(beginIndex));
@@ -66,7 +60,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	public MergeSort() {
 		this.name = "MergeSort";
 	    this.complexity = ComplexityClass.NLOGN;
-	    insertionSortThreshold = 20; //default threshold
+	    insertionSortThreshold = 10; //default threshold
 	}
 
   @Override
@@ -74,7 +68,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
     assert list != null : "Violation of: list is not null";
     
     //if the list is smaller than the threshold insertion sort it
-    if(threshold() <= list.size()) {
+    if(this.threshold() >= list.size()) {
     	InsertionSort<T> simpleSort = new InsertionSort<>();
     	simpleSort.sort(list);
     }
