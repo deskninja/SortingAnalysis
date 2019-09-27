@@ -1,6 +1,7 @@
 package assignment05;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -165,12 +166,24 @@ public final class SortUtils {
   public static long testAndTime(Sorter<Integer> sortRoutine, List<Integer> list) {
     assert sortRoutine != null : "Violation of: sortRoutine not null";
     assert list != null : "Violation of: list is not null";
+    
+    List<Integer> copy = new ArrayList<>();
+    for(Integer item: list) {
+    	copy.add(item);
+    }
 
+    
     long start = System.nanoTime();
     sortRoutine.sort(list);
     long stop = System.nanoTime();
-
-    return stop - start; 
+    long time = stop - start;
+    Collections.sort(copy);
+    for(int i = 0; i < copy.size(); i++) {
+    	if(copy.get(i) != list.get(i))
+    		time = -1;
+    }
+    
+    return time; 
   }
 
   /**
@@ -200,16 +213,25 @@ public final class SortUtils {
     assert sortRoutine != null : "Violation of: sortRoutine not null";
     int currentSize = startSize;
     long time = 0;
-	while(currentSize < maxSize) {
+    boolean timeOut = false;
+	while(currentSize < maxSize && !timeOut) {
 	    SimpleWriter out = new SimpleWriter1L();
 	    out.println(sortRoutine.name() + " (Expected runtime: " + sortRoutine.getExpectedComplexityClass() + ")");
 	    out.println("=============================================");
 
-	    time = testAndTime(sortRoutine, listOfRandomInts(startSize));
-	    time /= 1_000_000_000; //get the time in seconds
-	    if(time >= timeoutSec) {
-	    	currentSize = maxSize;
+	    time = testAndTime(sortRoutine, listOfRandomInts(currentSize));
+	    long secondsTime = time / 1_000_000_000; //get the time in seconds
+	    if(secondsTime >= timeoutSec) {
+	    	timeOut = true;
 	    	out.println("The opperation took too long. ");
+	    }
+	    else {
+	    	if(time == -1) {
+	    		out.println("list was not sorted correctly");
+	    	}
+	    	else {
+	    		out.println("the opperation took " + time + " seconds");
+	    	}
 	    }
 	    
 	    out.println("=============================================");
