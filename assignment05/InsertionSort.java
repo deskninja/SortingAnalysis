@@ -14,7 +14,7 @@ import java.util.List;
 public class InsertionSort<T extends Comparable<? super T>> extends AbstractSorter<T> {
 	
 	  public InsertionSort() {
-	    this.name = "QuickSortNaive";
+	    this.name = "InsertionSort";
 	    this.complexity = ComplexityClass.NSQUARED;
 	  }
 

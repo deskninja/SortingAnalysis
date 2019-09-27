@@ -162,8 +162,7 @@ public final class SortUtils {
    * 
    * @modifies {@code list}
    */
-  public static long testAndTime(Sorter<Integer> sortRoutine,
-      List<Integer> list) {
+  public static long testAndTime(Sorter<Integer> sortRoutine, List<Integer> list) {
     assert sortRoutine != null : "Violation of: sortRoutine not null";
     assert list != null : "Violation of: list is not null";
 
@@ -194,22 +193,30 @@ public final class SortUtils {
    * 
    * @requires startSize >= 0 and startSize <= maxSize and timeoutSec > 0
    */
-  public static void generateTimingReport(Sorter<Integer> sortRoutine,
-      int startSize, int sizeIncrement, int maxSize, int timeoutSec) {
+  public static void generateTimingReport(Sorter<Integer> sortRoutine, int startSize, int sizeIncrement, int maxSize, int timeoutSec) {
     assert startSize >= 0 : "Violation of: startSize >= 0";
     assert startSize <= maxSize : "Violation of: startSize <= maxSize";
     assert timeoutSec > 0 : "Violation of: timeoutSec > 0";
     assert sortRoutine != null : "Violation of: sortRoutine not null";
+    int currentSize = startSize;
+    long time = 0;
+	while(currentSize < maxSize) {
+	    SimpleWriter out = new SimpleWriter1L();
+	    out.println(sortRoutine.name() + " (Expected runtime: " + sortRoutine.getExpectedComplexityClass() + ")");
+	    out.println("=============================================");
 
-    SimpleWriter out = new SimpleWriter1L();
-    out.println(sortRoutine.name() + " (Expected runtime: "
-        + sortRoutine.getExpectedComplexityClass() + ")");
-    out.println("=============================================");
-
-
-
-    out.println("=============================================");
-    out.close();
+	    time = testAndTime(sortRoutine, listOfRandomInts(startSize));
+	    time /= 1_000_000_000; //get the time in seconds
+	    if(time >= timeoutSec) {
+	    	currentSize = maxSize;
+	    	out.println("The opperation took too long. ");
+	    }
+	    
+	    out.println("=============================================");
+	    out.close();
+	    currentSize += sizeIncrement;
+	}
+    
   }
 
 }
