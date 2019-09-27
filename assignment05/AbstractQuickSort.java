@@ -42,7 +42,12 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
   protected int partition(List<T> list, int left, int right) {
     assert list != null : "Violation of: list is not null";
 
-    return 0; // FIXME
+    if(list.size() == 1)
+    	return left;
+    
+    T thisPivot = pivot(list, left, right);
+    
+    return 0; 
   }
 
   /**

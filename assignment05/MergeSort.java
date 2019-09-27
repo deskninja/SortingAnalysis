@@ -38,10 +38,12 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 		if(list.size() > 1) {
     		List<T> firstHalf = new ArrayList<>(); //first half of {@code list}
     		firstHalf = partOfList(list, 0, list.size()/2);
-    		sortRecursive(firstHalf);
+    		
     		
     		List<T> secondHalf = new ArrayList<>(); //second half of {@code list}
     		secondHalf = partOfList(list, list.size()/2, list.size());
+    		
+    		sortRecursive(firstHalf);
     		sortRecursive(secondHalf);
     		
     		insertionSort(firstHalf, secondHalf);
