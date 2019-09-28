@@ -1,6 +1,5 @@
 package assignment05;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,50 +8,51 @@ import java.util.List;
  * 
  * This class must implement the {@code setThreshold, threshold} methods.
  * 
- * @author Jonathan Oliveros and Joshua Wells
+ * @author Swaroop Joshi
  *
  * @param <T> type of the element of the list this sorter can sort
  */
 public class QuickSortPivotFirst<T extends Comparable<? super T>>
     extends AbstractQuickSort<T> {
 	
-	private void swap(List<T> list, int position1, int position2) {
-		T temp = list.get(position1);
-		list.set(position1, list.get(position2));
-		list.set(position2, temp);
-	}
-
-	public QuickSortPivotFirst() {
-		this.name = "QuickSortPivotFirst";
-	    this.complexity = ComplexityClass.NLOGN;
-	}
+	private int Threshold;
 	
-	 @Override
-	  public final void sort(List<T> list) {
-	    if (list.size() > 1) {
-	      T pivot = list.remove(0);
+	public QuickSortPivotFirst() {
+    this.name = "QuickSortPivotFirst";
+    this.complexity = ComplexityClass.NLOGN;
+    Threshold = 20;
+    }
 
-	      List<T> right = new ArrayList<T>();
-	      List<T> left = new ArrayList<T>();
-
-	      sort(right);
-	      sort(left);
-
-	      list.addAll(front);
-	      list.add(pivot);
-	      list.addAll(back);
-	    }
-	  }
-
-	@Override
-	protected T pivot(List<T> list, int start, int end) {
-		assert list != null : "Violation of: list is not null";
-		//set the pivot to list(0) then swap the array with the last number sorted lower than it
-		//recurse left and right side
-		return list.get(start);
-	}
+  @Override
+  protected T pivot(List<T> list, int start, int end) {
+    assert list != null : "Violation of: list is not null";
+    return list.get(0);
+  }
   
-	// TODO Override other methods if required
-	// TODO Add private helper methods as needed
+  @Override
+  public void sort(List<T> list) {
+    assert list != null : "Violation of: list is not null";
+    quickSort(list, 0, list.size() - 1);    
+  }
+  
+  @Override
+  public void setThreshold(int threshold)
+      throws UnsupportedOperationException {
+    assert threshold >= 0 : "Violation of: threshold non-negative";
+
+    throw new UnsupportedOperationException(
+        "This operation is not supported by " + this.name());
+  }
+
+  @Override
+  public int threshold() throws UnsupportedOperationException {
+
+    throw new UnsupportedOperationException(
+        "This operation is not supported by " + this.name());
+    
+    
+  }
+  // TODO Override other methods if required
+  // TODO Add private helper methods as needed
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * This class must implement the {@code setThreshold, threshold} methods.
  * 
- * @author Jonathan Oliveros and Joshua Wells	
+ * @author Swaroop Joshi
  *
  * @param <T> type of the element of the list this sorter can sort
  */

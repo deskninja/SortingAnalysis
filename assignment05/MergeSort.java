@@ -16,6 +16,11 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	
 	private int insertionSortThreshold;
 	
+	/**
+	 * Use insertion sort from {@code list2} to {@code list1}. We can assume that {@code list1} is already sorted.
+	 * @param list1 sorted list being inserted to.
+	 * @param list2 list that contains T elements that need to be inserted.
+	 */
 	public void insertionSort(List<T> list1, List<T> list2){
 		boolean sorted = false;
 		int index = 0;
@@ -47,6 +52,8 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
     		sortRecursive(secondHalf);
     		
     		insertionSort(firstHalf, secondHalf);
+    	} else {
+    		return;
     	}
 	}
 	
