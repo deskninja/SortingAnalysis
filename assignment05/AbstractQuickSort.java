@@ -26,7 +26,7 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
    * @modifies {@code list}
    */
   protected abstract T pivot(List<T> list, int start, int end);
-
+  
   /**
    * Determines a pivot and partitions the {@code list} between {@code left} and
    * {@code right} such that all elements less than pivot are on its left and all
@@ -41,13 +41,27 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
    */
   protected int partition(List<T> list, int left, int right) {
     assert list != null : "Violation of: list is not null";
-
     if(list.size() == 1)
-    	return left;
-    
-    T thisPivot = pivot(list, left, right);
-    
-    return 0; 
+    	//only position pivot will be at is 0
+    	return 0;
+    T pivot = pivot(list,left,right);
+    while(left < right) {
+    	T first = list.get(left);
+    	while(first.compareTo(pivot) <= 0 && left < list.indexOf(pivot)) {
+    		first = list.get(left);
+    		left++;
+    	}
+    	T second = list.get(right);
+    	while(second.compareTo(pivot) > 0 && right > list.indexOf(pivot)) {
+    		second = list.get(right);
+    		right--;
+    	}
+    	if(first.compareTo(second) > 0) {
+    		SortUtils.swapElementsAt(list, left, right);
+    		
+    	}
+    }
+    return list.indexOf(pivot); 
   }
 
   /**
@@ -61,10 +75,12 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
    * @modifies {@code list}
    */
   protected void quickSort(List<T> list, int left, int right) {
-    assert list != null : "Violation of: list is not null";
-
-    // FIXME
-  }
+    assert list != null : "Violation of: list is not null";   
+    	//find the location of the specified pivot and set pivot in place
+    	int locationOfNewPivot = partition(list, left, right);
+    	quickSort(list, left, locationOfNewPivot - 1);
+    	quickSort(list, locationOfNewPivot + 1, right);
+    }
 
   @Override
   public void sort(List<T> list) {
@@ -75,6 +91,8 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
     // Note: this can be common to all quicksort implementations; if you want to
     // modify it for any particular implementation, override it in the derived class
   }
+  
+
 
   // TODO Override other methods if required
   // TODO Add private helper methods as needed

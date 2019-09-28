@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The base interface for implementing various sorting algorithms.
  * 
- * @author Joshua Wells and Jonathan Oliveros
+ * @author Swaroop Joshi
  *
  * @param <T> type of elements of the collection to be sorted
  */

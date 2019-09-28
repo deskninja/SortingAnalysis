@@ -3,7 +3,7 @@ package assignment05;
 /**
  * Implementations of the common methods of the {@code Sorter} component.
  * 
- * @author Jonathan Oliveros and Joshua Wells
+ * @author Swaroop Joshi
  *
  * @param <T> type of elements of the collection to be sorted
  */

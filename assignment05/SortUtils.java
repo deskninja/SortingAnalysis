@@ -223,14 +223,14 @@ public final class SortUtils {
 	    long secondsTime = time / 1_000_000_000; //get the time in seconds
 	    if(secondsTime >= timeoutSec) {
 	    	timeOut = true;
-	    	out.println("The opperation took too long. ");
+	    	out.println("The operation took too long. ");
 	    }
 	    else {
 	    	if(time == -1) {
 	    		out.println("list was not sorted correctly");
 	    	}
 	    	else {
-	    		out.println("the opperation took " + time + " seconds");
+	    		out.println("the operation took " + time + " seconds");
 	    	}
 	    }
 	    
