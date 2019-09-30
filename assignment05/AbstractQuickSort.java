@@ -26,7 +26,7 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
    * @modifies {@code list}
    */
   protected abstract T pivot(List<T> list, int start, int end);
-
+  
   /**
    * Determines a pivot and partitions the {@code list} between {@code left} and
    * {@code right} such that all elements less than pivot are on its left and all
@@ -46,8 +46,24 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
     	return left;
     
     T thisPivot = pivot(list, left, right);
+    int index = left + 1; //this assumes that {@code thisPivot} is at index position left
+    int currentRight = right; //tracks right as new numbers are added to the left which do not need to be sorted
+    while(index != currentRight) { 
+    	if(list.get(index).compareTo(thisPivot) > 0) { //if the item in the list is greater than the pivot
+    		list.add(currentRight + 1, list.get(index)); //insert the element to the position past the current left
+    		currentRight--; //ignore the last element already sorted
+    		list.remove(index); //remove the element just inserted and now the inserted element should be at location left
+    	}
+    	else { //less than or equal to the pivot
+    		list.add(left, list.get(index)); //insert the element at the position right after the pivot
+    		list.remove(index); //remove the element at the previous place
+    		index++; //next element
+    	}
+    }
     
-    return 0; 
+    list.add(index, list.get(left)); //insert the list after the last element less than or equal to it
+    
+    return index; 
   }
 
   /**
@@ -63,20 +79,18 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
   protected void quickSort(List<T> list, int left, int right) {
     assert list != null : "Violation of: list is not null";
 
-    // FIXME
+    int pivot = this.partition(list, left, right); //sort and get the position of the new pivot
+    quickSort(list, left, pivot - 1); //sort the left side excluding the pivot
+    quickSort(list, pivot + 1, right); //sorts the right side excluding the pivot
   }
 
   @Override
   public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
 
-    // FIXME
-
-    // Note: this can be common to all quicksort implementations; if you want to
-    // modify it for any particular implementation, override it in the derived class
+    int left = 0; //far right index of the list
+    int right = list.size()	- 1; //get the far left index of the list
+    quickSort(list, left, right); //quickSort the list
   }
-
-  // TODO Override other methods if required
-  // TODO Add private helper methods as needed
 
 }

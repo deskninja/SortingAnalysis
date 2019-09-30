@@ -223,6 +223,7 @@ public final class SortUtils {
 	    long secondsTime = time / 1_000_000_000; //get the time in seconds
 	    if(secondsTime >= timeoutSec) {
 	    	timeOut = true;
+    		out.println("for array of size " + currentSize);
 	    	out.println("The opperation took too long. ");
 	    }
 	    else {
@@ -230,6 +231,7 @@ public final class SortUtils {
 	    		out.println("list was not sorted correctly");
 	    	}
 	    	else {
+	    		out.println("for array of size " + currentSize);
 	    		out.println("the opperation took " + time + " seconds");
 	    	}
 	    }
