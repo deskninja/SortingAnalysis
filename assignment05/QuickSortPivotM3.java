@@ -14,13 +14,32 @@ import java.util.List;
  */
 public class QuickSortPivotM3<T extends Comparable<? super T>>
     extends AbstractQuickSort<T> {
+	
+	private int quickSortThreshHold;
 
-  // TODO add constructor
+  public QuickSortPivotM3() {
+	  this.name = "QuickSortPivotM3";
+	    this.complexity = ComplexityClass.NLOGN;
+	    this.setThreshold(40); //default threshold
+  }
 
   @Override
   protected T pivot(List<T> list, int start, int end) {
     assert list != null : "Violation of: list is not null";
     return null; // FIXME
+  }
+  
+  @Override
+	 public void setThreshold(int threshold)
+	     throws UnsupportedOperationException {
+		 assert threshold >= 0 : "Violation of: threshold non-negative";
+
+		 quickSortThreshHold = threshold;
+	 }
+
+  @Override
+  public int threshold() throws UnsupportedOperationException {
+	  return quickSortThreshHold;
   }
 
   // TODO Override other methods if required

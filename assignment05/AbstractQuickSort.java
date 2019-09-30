@@ -2,6 +2,8 @@ package assignment05;
 
 import java.util.List;
 
+
+
 /**
  * Implementation of common methods for all quick-sort variants.
  * 
@@ -9,8 +11,10 @@ import java.util.List;
  *
  * @param <T> type of elements of the collection to be sorted
  */
-public abstract class AbstractQuickSort<T extends Comparable<? super T>>
-    extends AbstractSorter<T> {
+public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends AbstractSorter<T> {
+	
+	private int quickSortThreshHold;
+	
   /**
    * Returns the pivot around which to quick-sort the list. This method may modify
    * the {@code list}, e.g., median of three will move smallest value to front of
@@ -92,5 +96,18 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
     int right = list.size()	- 1; //get the far left index of the list
     quickSort(list, left, right); //quickSort the list
   }
+  
+  @Override
+	 public void setThreshold(int threshold)
+	     throws UnsupportedOperationException {
+		 assert threshold >= 0 : "Violation of: threshold non-negative";
+
+		 quickSortThreshHold = threshold;
+	 }
+
+	@Override
+	public int threshold() throws UnsupportedOperationException {
+		  return quickSortThreshHold;
+	}
 
 }
