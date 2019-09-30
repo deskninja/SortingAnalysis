@@ -59,8 +59,7 @@ public class QuickSortNaive<T extends Comparable<? super T>>
    * @param order ordering by which to separate entries
    * @modifies list, front, back
    */
-  private void naivePartition(List<T> list, T pivot, List<T> front,
-      List<T> back) {
+  private void naivePartition(List<T> list, T pivot, List<T> front, List<T> back) {
     assert list != null : "Violation of: list is not null";
     assert front != null : "Violation of: front is not null";
     assert back != null : "Violation of: back is not null";
