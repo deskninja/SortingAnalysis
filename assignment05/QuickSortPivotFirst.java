@@ -16,8 +16,6 @@ import java.util.List;
 public class QuickSortPivotFirst<T extends Comparable<? super T>>
     extends AbstractQuickSort<T> {
 	
-	private int insertionSortThreshold;
-	
 	private void swap(List<T> list, int position1, int position2) {
 		T temp = list.get(position1);
 		list.set(position1, list.get(position2));
@@ -27,6 +25,7 @@ public class QuickSortPivotFirst<T extends Comparable<? super T>>
 	public QuickSortPivotFirst() {
 		this.name = "QuickSortPivotFirst";
 	    this.complexity = ComplexityClass.NLOGN;
+	    super.setThreshold(40);
 	}
 	
 	@Override
@@ -34,19 +33,6 @@ public class QuickSortPivotFirst<T extends Comparable<? super T>>
 		//set the pivot to list(0) then swap the array with the last number sorted lower than it
 		//recurse left and right side
 	}
-
-	 @Override
-	 public void setThreshold(int threshold)
-	     throws UnsupportedOperationException {
-		 assert threshold >= 0 : "Violation of: threshold non-negative";
-
-		 insertionSortThreshold = threshold;
-	 }
-
-	  @Override
-	  public int threshold() throws UnsupportedOperationException {
-		  return insertionSortThreshold;
-	  }
 
 	@Override
 	protected T pivot(List<T> list, int start, int end) {
