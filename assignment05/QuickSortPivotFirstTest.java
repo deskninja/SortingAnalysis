@@ -9,7 +9,7 @@ public class QuickSortPivotFirstTest {
 	@Test
 	public void testSort() {
 		QuickSortPivotFirst<Integer> quickSortPivotFirst = new QuickSortPivotFirst<>();
-		SortUtils.generateTimingReport(quickSortPivotFirst , 5, 100, 1_000, 1);
+		SortUtils.generateTimingReport(quickSortPivotFirst , 8, 10, 100, 100000000);
 	}
 
 }

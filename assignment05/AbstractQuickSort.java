@@ -47,41 +47,48 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
   protected int partition(List<T> list, int left, int right) {
 	  assert list != null : "Violation of: list is not null";
 	  
-	  if(right - left <= 2) {
-		  if(right - left <= 1)
+	  //check the if the length is big enough to partition
+	  if(right - left < 2) {
+		  if(right - left == 0)
 			  return left;
 		  
 		  if(list.get(left).compareTo(list.get(right)) > 0) {
 			  SortUtils.swapElementsAt(list, left, right);
 			  return right;
 		  }
-			  
+		  //it is a two item sorted array already
+		  return left;	  
 	  }
 		  
 	  
 	  T pivot = pivot(list, left, right);
 	  int pivotPostion = left;
+	  left++;
 	  
-	  T first = list.get(left++);
-	  T second = list.get(right);
 	  while(left < right) { //while the left item is less than the right item
 		  
-	    	while(first.compareTo(pivot) < 0 && left < right) {
+	    	while(list.get(left).compareTo(pivot) <= 0 && left < right) {
 	    		left++;
 	    	}
 	    	
-	    	first = list.get(left);
-	    	while(second.compareTo(pivot) > 0 && left < right) {
-	    		right--;
-	    	}
-	    	if(right < left) {
-	    		SortUtils.swapElementsAt(list, left, right);
-	    		left++;
+	    	while(list.get(right).compareTo(pivot) > 0 && left < right) {
 	    		right--;
 	    	}
 	    	
+	    	if(left < right)
+	    		SortUtils.swapElementsAt(list, right, left);
 	  }
-	  SortUtils.swapElementsAt(list, pivotPostion, left);
+	  if(list.get(left).compareTo(list.get(pivotPostion)) <= 0) {
+		  SortUtils.swapElementsAt(list, pivotPostion, left);
+	  }
+	  
+	  else {
+		  if(left > 1) {
+			  SortUtils.swapElementsAt(list, pivotPostion, left - 1);
+			  return left - 1;
+		  }
+	  }
+		  
 	  return left; 
   }
 
@@ -98,17 +105,12 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
   protected void quickSort(List<T> list, int left, int right) {
     assert list != null : "Violation of: list is not null";
     
-    if(list.size() < this.threshold()) {
-    	InsertionSort<T> simpleSort = new InsertionSort<>();
-    	simpleSort.sort(list);
-    }
-    
-    else if(right - left == 2) {
-    	if(list.get(right).compareTo(list.get(left)) > 0)
+    if(right - left == 1) {
+    	if(list.get(right).compareTo(list.get(left)) <= 0)
     		SortUtils.swapElementsAt(list, right, left);;
     }
     
-    else if(right - left > 2) {
+    else {
     	int pivot = partition(list, left, right);
     	if(pivot != left)
     		quickSort(list, left, pivot - 1);
@@ -123,7 +125,14 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
 
     int left = 0; //far right index of the list
     int right = list.size()	- 1; //get the far left index of the list
-    quickSort(list, left, right); //quickSort the list
+    if(list.size() != 1) { //if the array is bigger than size 1
+    	if(list.size() < this.threshold()) {
+        	InsertionSort<T> simpleSort = new InsertionSort<>();
+        	simpleSort.sort(list);
+        }
+    	//if the threshold is less than the list size quickSort
+    	quickSort(list, left, right); //quickSort the list
+    }
   }
   
   @Override

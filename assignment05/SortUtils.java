@@ -179,7 +179,11 @@ public final class SortUtils {
     long stop = System.nanoTime();
     long time = stop - start;
     Collections.sort(copy);
-    
+    System.out.println("_________________________");
+    System.out.println(list.toString() + " sorted list");
+    System.out.println(copy.toString() + " Java Sorted");
+    System.out.println("_________________________");
+       
     //this code doesn't work
 //    int nextInt = list.get(1);
 //    int index = 1;
