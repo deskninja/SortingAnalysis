@@ -1,5 +1,6 @@
 package assignment05;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,15 +16,14 @@ import java.util.List;
 public class QuickSortPivotFirst<T extends Comparable<? super T>>
     extends AbstractQuickSort<T> {
 
-  // TODO add constructor
+	public QuickSortPivotFirst() {
+		this.name = "QuickSortPivotFirst";
+	    this.complexity = ComplexityClass.NLOGN;
+	    this.setThreshold(0); //default threshold
+	}
 
-  @Override
-  protected T pivot(List<T> list, int start, int end) {
-    assert list != null : "Violation of: list is not null";
-    return null; // FIXME
-  }
-  
-  // TODO Override other methods if required
-  // TODO Add private helper methods as needed
-
+	@Override
+	protected T pivot(List<T> list, int start, int end) {
+		return list.get(start);
+	}
 }

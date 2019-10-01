@@ -13,7 +13,7 @@ import java.util.List;
  * This class does not extend {@code AbstractQuickSort}, but it extends
  * {@code AbstractSorter} and thus implements the {@code Sorter}.
  * 
- * @author Jonathan Oliveros and Joshua Wells
+ * @author Swaroop Joshi
  *
  * @param <T> type of the element of the list this sorter can sort
  */

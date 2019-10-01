@@ -1,6 +1,7 @@
 package assignment05;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -11,13 +12,13 @@ import components.simplewriter.SimpleWriter1L;
 /**
  * Various utility methods for Sorting analysis.
  * 
- * @author Joshua Wells and Jonathan Oliveros
+ * @author Joshua Wells, Jonathan Oliveros
  *
  */
 public final class SortUtils {
 
-	
-	
+
+
   /**
    * Sole constructor -- making it private ensures this class cannot be
    * instantiated.
@@ -61,10 +62,10 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     boolean isSorted = true;
     int index = 0;
-    
-    while(isSorted) {
+    while(isSorted && index < list.size()) {
     	if(list.get(index).compareTo(list.get(index+1)) > 0)
     		isSorted = false;
+    	index++;
     }
 
     return isSorted; 
@@ -80,16 +81,16 @@ public final class SortUtils {
    */
   public static List<Integer> listOfRandomInts(int count) {
     assert count >= 0 : "Violation of count >= 0";
-    
+
     List<Integer> listOfInts = new ArrayList<>();
-    
+
     Random rand = new Random();
-    
+
     for(int i = 0; i < count; i++) {
-    	Integer nextInt = rand.nextInt();;
+    	int nextInt = rand.nextInt();
     	listOfInts.add(nextInt);
     }
-    
+
     return listOfInts; 
   }
 
@@ -104,11 +105,12 @@ public final class SortUtils {
    */
   public static List<Integer> listOfSortedInts(int count) {
     assert count >= 0 : "Violation of count >= 0";
-    
+
     List<Integer> sortedInts = new ArrayList<>();
-    sortedInts = listOfRandomInts(count);
-    
-    return null; 
+    for(int i = 1; i < i + 1; i++) {
+    	sortedInts.add(i);
+    }
+    return sortedInts; 
   }
 
   /**
@@ -122,8 +124,11 @@ public final class SortUtils {
    */
   public static List<Integer> listOfReversedSortedInts(int count) {
     assert count >= 0 : "Violation of count >= 0";
-
-    return null; // FIXME implement
+    List<Integer> reverseSorted = new ArrayList<>();
+    for(int i = count + 1; i > 1; i--) {
+    	reverseSorted.add(i);
+    }
+    return reverseSorted;
   }
 
   /**
@@ -139,10 +144,11 @@ public final class SortUtils {
    */
   public static List<Integer> listOfDuplicateInts(int count, int element) {
     assert count >= 0 : "Violation of count >= 0";
-
-    
-    
-    return null;
+    List<Integer> duplicates = new ArrayList<>();
+    for(int i = 0; i < count; i++) {
+    	duplicates.add(element);
+    }
+    return duplicates;
   }
 
   /**
@@ -158,16 +164,27 @@ public final class SortUtils {
    * 
    * @modifies {@code list}
    */
-  public static long testAndTime(Sorter<Integer> sortRoutine,
-      List<Integer> list) {
+  public static long testAndTime(Sorter<Integer> sortRoutine, List<Integer> list) {
     assert sortRoutine != null : "Violation of: sortRoutine not null";
     assert list != null : "Violation of: list is not null";
     
-    long start = System.nanoTime();
-    
-    long stop = System.nanoTime();
+    List<Integer> copy = new ArrayList<>();
+    for(Integer item: list) {
+    	copy.add(item);
+    }
 
-    return stop - start; 
+    
+    long start = System.nanoTime();
+    sortRoutine.sort(list);
+    long stop = System.nanoTime();
+    long time = stop - start;
+    Collections.sort(copy);
+    for(int i = 0; i < copy.size(); i++) {
+    	if(copy.get(i) != list.get(i))
+    		time = -1;
+    }
+    
+    return time; 
   }
 
   /**
@@ -190,22 +207,39 @@ public final class SortUtils {
    * 
    * @requires startSize >= 0 and startSize <= maxSize and timeoutSec > 0
    */
-  public static void generateTimingReport(Sorter<Integer> sortRoutine,
-      int startSize, int sizeIncrement, int maxSize, int timeoutSec) {
+  public static void generateTimingReport(Sorter<Integer> sortRoutine, int startSize, int sizeIncrement, int maxSize, int timeoutSec) {
     assert startSize >= 0 : "Violation of: startSize >= 0";
     assert startSize <= maxSize : "Violation of: startSize <= maxSize";
     assert timeoutSec > 0 : "Violation of: timeoutSec > 0";
     assert sortRoutine != null : "Violation of: sortRoutine not null";
+    int currentSize = startSize;
+    long time = 0;
+    boolean timeOut = false;
+	while(currentSize < maxSize && !timeOut) {
+	    SimpleWriter out = new SimpleWriter1L();
+	    out.println(sortRoutine.name() + " (Expected runtime: " + sortRoutine.getExpectedComplexityClass() + ")");
+	    out.println("=============================================");
 
-    SimpleWriter out = new SimpleWriter1L();
-    out.println(sortRoutine.name() + " (Expected runtime: "
-        + sortRoutine.getExpectedComplexityClass() + ")");
-    out.println("=============================================");
+	    time = testAndTime(sortRoutine, listOfRandomInts(currentSize));
+	    long secondsTime = time / 1_000_000_000; //get the time in seconds
+	    if(secondsTime >= timeoutSec) {
+	    	timeOut = true;
+	    	out.println("The operation took too long. ");
+	    }
+	    else {
+	    	if(time == -1) {
+	    		out.println("list was not sorted correctly");
+	    	}
+	    	else {
+	    		out.println("the operation took " + time + " seconds");
+	    	}
+	    }
+	    
+	    out.println("=============================================");
+	    out.close();
+	    currentSize += sizeIncrement;
+	}
     
-    
-
-    out.println("=============================================");
-    out.close();
   }
 
 }
