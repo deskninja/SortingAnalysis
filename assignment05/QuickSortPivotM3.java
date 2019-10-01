@@ -18,7 +18,7 @@ public class QuickSortPivotM3<T extends Comparable<? super T>>
 	private int quickSortThreshHold;
 
   public QuickSortPivotM3() {
-	  this.name = "QuickSortPivotM3";
+	  	this.name = "QuickSortPivotM3";
 	    this.complexity = ComplexityClass.NLOGN;
 	    this.setThreshold(40); //default threshold
   }

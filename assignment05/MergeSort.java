@@ -16,25 +16,32 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	
 	private int insertionSortThreshold;
 	
-	public void insertionSort(List<T> list1, List<T> list2){
+	public List<T> insertionSort(List<T> list1, List<T> list2){
 		boolean sorted = false;
 		int index = 0;
+		List<T> newArray = new ArrayList<>();
+		for(T item: list1) {
+			newArray.add(item);
+		}
+		
 		for(T item: list2) {
 			while(!sorted) {
-				if(list1.size() == index) {
-					list1.add(item);
+				if(newArray.size() == index) {
+					newArray.add(item);
+					sorted = true;
 				}
-				else if(item.compareTo(list1.get(index)) < 0) {
-					list1.add(index, item);
+				else if(item.compareTo(newArray.get(index)) <= 0) {
+					newArray.add(index, item);
 					sorted = true;
 				}
 				index++;
 			}
 			sorted = false;
 		}
+		return newArray;
 	}
 	
-	private void sortRecursive(List<T> list) {
+	private List<T> sortRecursive(List<T> list) {
 		if(list.size() > 1) {
     		List<T> firstHalf = new ArrayList<>(); //first half of {@code list}
     		firstHalf = partOfList(list, 0, list.size()/2);
@@ -43,11 +50,14 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
     		List<T> secondHalf = new ArrayList<>(); //second half of {@code list}
     		secondHalf = partOfList(list, list.size()/2, list.size());
     		
-    		sortRecursive(firstHalf);
-    		sortRecursive(secondHalf);
+    		firstHalf = sortRecursive(firstHalf);
     		
-    		insertionSort(firstHalf, secondHalf);
+    		secondHalf = sortRecursive(secondHalf);
+    		
+    		firstHalf = insertionSort(firstHalf, secondHalf);
+    		return firstHalf;
     	}
+		return list;
 	}
 	
 	public List<T> partOfList(List<T> list, int beginIndex, int endIndex){
@@ -62,7 +72,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	public MergeSort() {
 		this.name = "MergeSort";
 	    this.complexity = ComplexityClass.NLOGN;
-	    insertionSortThreshold = 10; //default threshold
+	    insertionSortThreshold = 0; //default threshold
 	}
 
   @Override
@@ -77,7 +87,9 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
     
     //if the list is larger than the threshold merge sort it
     else {
-    	sortRecursive(list);
+    	List<T> newList = new ArrayList<>();
+    	newList = sortRecursive(list);
+    	list = newList;
     }  
  }
   

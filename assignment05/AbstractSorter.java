@@ -14,6 +14,7 @@ public abstract class AbstractSorter<T extends Comparable<? super T>>
    * Name of the sorter, e.g. "Insertion Sort".
    */
   protected String name;
+  
   /**
    * Complexity class, e.g., O(n^2), using the enum {@link ComplexityClass}.
    */

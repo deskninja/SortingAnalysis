@@ -15,23 +15,11 @@ import java.util.List;
  */
 public class QuickSortPivotFirst<T extends Comparable<? super T>>
     extends AbstractQuickSort<T> {
-	
-	private void swap(List<T> list, int position1, int position2) {
-		T temp = list.get(position1);
-		list.set(position1, list.get(position2));
-		list.set(position2, temp);
-	}
 
 	public QuickSortPivotFirst() {
 		this.name = "QuickSortPivotFirst";
 	    this.complexity = ComplexityClass.NLOGN;
-	    super.setThreshold(40);
-	}
-	
-	@Override
-	public final void sort(List<T> list) {
-		//set the pivot to list(0) then swap the array with the last number sorted lower than it
-		//recurse left and right side
+	    this.setThreshold(0); //default threshold
 	}
 
 	@Override

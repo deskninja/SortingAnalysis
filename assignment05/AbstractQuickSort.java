@@ -2,6 +2,8 @@ package assignment05;
 
 import java.util.List;
 
+
+
 /**
  * Implementation of common methods for all quick-sort variants.
  * 
@@ -9,8 +11,10 @@ import java.util.List;
  *
  * @param <T> type of elements of the collection to be sorted
  */
-public abstract class AbstractQuickSort<T extends Comparable<? super T>>
-    extends AbstractSorter<T> {
+public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends AbstractSorter<T> {
+	
+	private int quickSortThreshHold;
+	
   /**
    * Returns the pivot around which to quick-sort the list. This method may modify
    * the {@code list}, e.g., median of three will move smallest value to front of
@@ -28,6 +32,7 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
   protected abstract T pivot(List<T> list, int start, int end);
   
   /**
+   * Assumes the pivot method moves the pivot to index 0 of {@code list}
    * Determines a pivot and partitions the {@code list} between {@code left} and
    * {@code right} such that all elements less than pivot are on its left and all
    * elements greater than pivot are to its right.
@@ -40,37 +45,44 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
    * @modifies {@code list}
    */
   protected int partition(List<T> list, int left, int right) {
-    assert list != null : "Violation of: list is not null";
-    if(right <= 1)
-    	return 0;
-    else if(right == 2) {
-    	if(list.get(0).compareTo(list.get(1)) > 0)
-    		SortUtils.swapElementsAt(list, 0, 1);
-    	//only position the pivot can be at is 0
-    return 0;
-    }
-    T pivot = pivot(list,left,right);
-    while(left < right) {
-    	left++;
-    	T first = list.get(left);
-    	while(first.compareTo(pivot) < 0 && left < list.size() / 2) {
-    		left++;
-    		first = list.get(left);
-    	}
-    	T second = list.get(right);
-    	while(second.compareTo(pivot) > 0 && right > list.size() / 2) {
-    		right--;
-    		second = list.get(right);
-    	}
-    	if(first.compareTo(second) > 0) {
-    		SortUtils.swapElementsAt(list, left, right);
-    	}
-    	right--;
-    	if(right <= left) {
-    		SortUtils.swapElementsAt(list, 0, right);
-    	}
-    }
-    return list.indexOf(pivot); 
+	  assert list != null : "Violation of: list is not null";
+	  
+	  if(right - left <= 2) {
+		  if(right - left <= 1)
+			  return left;
+		  
+		  if(list.get(left).compareTo(list.get(right)) > 0) {
+			  SortUtils.swapElementsAt(list, left, right);
+			  return right;
+		  }
+			  
+	  }
+		  
+	  
+	  T pivot = pivot(list, left, right);
+	  int pivotPostion = left;
+	  
+	  T first = list.get(left++);
+	  T second = list.get(right);
+	  while(left < right) { //while the left item is less than the right item
+		  
+	    	while(first.compareTo(pivot) < 0 && left < right) {
+	    		left++;
+	    	}
+	    	
+	    	first = list.get(left);
+	    	while(second.compareTo(pivot) > 0 && left < right) {
+	    		right--;
+	    	}
+	    	if(right < left) {
+	    		SortUtils.swapElementsAt(list, left, right);
+	    		left++;
+	    		right--;
+	    	}
+	    	
+	  }
+	  SortUtils.swapElementsAt(list, pivotPostion, left);
+	  return left; 
   }
 
   /**
@@ -84,26 +96,47 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>>
    * @modifies {@code list}
    */
   protected void quickSort(List<T> list, int left, int right) {
-    assert list != null : "Violation of: list is not null";   
-    	//find the location of the specified pivot and set pivot in place
-    	int locationOfNewPivot = partition(list, left, right);
-    	quickSort(list, left, locationOfNewPivot - 1);
-    	quickSort(list, locationOfNewPivot + 1, right);
+    assert list != null : "Violation of: list is not null";
+    
+    if(list.size() < this.threshold()) {
+    	InsertionSort<T> simpleSort = new InsertionSort<>();
+    	simpleSort.sort(list);
     }
+    
+    else if(right - left == 2) {
+    	if(list.get(right).compareTo(list.get(left)) > 0)
+    		SortUtils.swapElementsAt(list, right, left);;
+    }
+    
+    else if(right - left > 2) {
+    	int pivot = partition(list, left, right);
+    	if(pivot != left)
+    		quickSort(list, left, pivot - 1);
+    	if(pivot != right)
+    		quickSort(list, pivot + 1, right);
+    }
+  }
 
   @Override
   public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
 
-    // FIXME
-
-    // Note: this can be common to all quicksort implementations; if you want to
-    // modify it for any particular implementation, override it in the derived class
+    int left = 0; //far right index of the list
+    int right = list.size()	- 1; //get the far left index of the list
+    quickSort(list, left, right); //quickSort the list
   }
   
+  @Override
+	 public void setThreshold(int threshold)
+	     throws UnsupportedOperationException {
+		 assert threshold >= 0 : "Violation of: threshold non-negative";
 
+		 quickSortThreshHold = threshold;
+	 }
 
-  // TODO Override other methods if required
-  // TODO Add private helper methods as needed
+	@Override
+	public int threshold() throws UnsupportedOperationException {
+		  return quickSortThreshHold;
+	}
 
 }

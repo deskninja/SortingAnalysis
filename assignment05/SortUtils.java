@@ -86,7 +86,8 @@ public final class SortUtils {
     Random rand = new Random();
 
     for(int i = 0; i < count; i++) {
-    	int nextInt = rand.nextInt();
+    	//int nextInt = rand.nextInt();
+    	int nextInt = (int) (Math.random() * 10);
     	listOfInts.add(nextInt);
     }
 
@@ -178,11 +179,20 @@ public final class SortUtils {
     long stop = System.nanoTime();
     long time = stop - start;
     Collections.sort(copy);
-    for(int i = 0; i < copy.size(); i++) {
-    	if(copy.get(i) != list.get(i))
-    		time = -1;
-    }
     
+    //this code doesn't work
+//    int nextInt = list.get(1);
+//    int index = 1;
+//    for(Integer i: list) {
+//    	if(nextInt < i)
+//    		time = -1;
+//    	index++;
+//    	if(index < list.size())
+//    		nextInt = list.get(index);
+//    }
+//    
+//    if(time == -1)
+//    	System.out.println(copy.toString() + " badly sorted");
     return time; 
   }
 
@@ -232,7 +242,7 @@ public final class SortUtils {
 	    	}
 	    	else {
 	    		out.println("for array of size " + currentSize);
-	    		out.println("the opperation took " + time + " seconds");
+	    		out.println("the opperation took " + time + " nanoSeconds");
 	    	}
 	    }
 	    

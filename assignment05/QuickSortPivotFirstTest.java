@@ -7,8 +7,9 @@ import org.junit.Test;
 public class QuickSortPivotFirstTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testSort() {
+		QuickSortPivotFirst<Integer> quickSortPivotFirst = new QuickSortPivotFirst<>();
+		SortUtils.generateTimingReport(quickSortPivotFirst , 5, 100, 1_000, 1);
 	}
 
 }

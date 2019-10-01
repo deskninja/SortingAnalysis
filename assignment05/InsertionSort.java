@@ -34,7 +34,6 @@ public class InsertionSort<T extends Comparable<? super T>> extends AbstractSort
 	@Override	
 	public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
-    System.out.println("list size " + list.size());
 
     int currentIndex = 0;
 	boolean postionFound = false;
