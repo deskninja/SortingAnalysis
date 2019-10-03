@@ -42,7 +42,12 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	}
 	
 	private List<T> sortRecursive(List<T> list) {
-		if(list.size() > 1) {
+		if(this.threshold() > list.size()) {
+	    	InsertionSort<T> simpleSort = new InsertionSort<>();
+	    	simpleSort.sort(list);
+	    }
+		
+		else if(list.size() > 1) {
     		List<T> firstHalf = new ArrayList<>(); //first half of {@code list}
     		firstHalf = partOfList(list, 0, list.size()/2);
     		
@@ -54,8 +59,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
     		
     		secondHalf = sortRecursive(secondHalf);
     		
-    		firstHalf = merge(firstHalf, secondHalf);
-    		return firstHalf;
+    		return this.merge(firstHalf, secondHalf);
     	}
 		return list;
 	}
@@ -72,26 +76,18 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	public MergeSort() {
 		this.name = "MergeSort";
 	    this.complexity = ComplexityClass.NLOGN;
-	    insertionSortThreshold = 10; //default threshold
+	    insertionSortThreshold = 0; //default threshold
 	}
 
   @Override
   public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
     
-    //if the list is smaller than the threshold insertion sort it
-    if(this.threshold() >= list.size()) {
-    	InsertionSort<T> simpleSort = new InsertionSort<>();
-    	simpleSort.sort(list);
-    }
+    List<T> temp = new ArrayList<>();
+  	temp.addAll(sortRecursive(list));
+  	list.clear();
+  	list.addAll(temp);
     
-    //if the list is larger than the threshold merge sort it
-    else {
-    	List<T> newList = new ArrayList<>();
-    	newList = sortRecursive(list);
-    	list = newList;
-    	System.out.println(list);
-    }  
  }
   
   @Override

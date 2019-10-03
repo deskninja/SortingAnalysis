@@ -26,4 +26,5 @@ public class QuickSortPivotFirst<T extends Comparable<? super T>>
 	protected T pivot(List<T> list, int start, int end) {
 		return list.get(start);
 	}
+	
 }

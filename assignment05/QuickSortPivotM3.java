@@ -13,13 +13,11 @@ import java.util.List;
  * @param <T> type of the element of the list this sorter can sort
  */
 public class QuickSortPivotM3<T extends Comparable<? super T>> extends AbstractQuickSort<T> {
-	
-	private int quickSortThreshHold;
 
 	  public QuickSortPivotM3() {
 		  	this.name = "QuickSortPivotM3";
 		    this.complexity = ComplexityClass.NLOGN;
-		    this.setThreshold(40); //default threshold
+		    this.setThreshold(0); //default threshold
 	  }
 	
 	  @Override
@@ -51,19 +49,6 @@ public class QuickSortPivotM3<T extends Comparable<? super T>> extends AbstractQ
     	}
     	SortUtils.swapElementsAt(list, middle, end);
     	return list.get(start);
-	  }
-	  
-	  @Override
-		 public void setThreshold(int threshold)
-		     throws UnsupportedOperationException {
-			 assert threshold >= 0 : "Violation of: threshold non-negative";
-	
-			 quickSortThreshHold = threshold;
-		 }
-	
-	  @Override
-	  public int threshold() throws UnsupportedOperationException {
-		  return quickSortThreshHold;
 	  }
 
 }

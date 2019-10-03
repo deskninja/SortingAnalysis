@@ -14,11 +14,11 @@ import java.util.Random;
  * @param <T> type of the element of the list this sorter can sort
  */
 public class QuickSortPivotRandom<T extends Comparable<? super T>> extends AbstractQuickSort<T> {
-
+	
 	public QuickSortPivotRandom() {
 		this.name = "QuickSortPivotRandom";
 		this.complexity = ComplexityClass.NLOGN;
-		this.setThreshold(5); // default threshold
+		this.setThreshold(0); // default threshold
 	}
 
 	@Override

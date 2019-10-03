@@ -47,8 +47,11 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
   protected int partition(List<T> list, int left, int right) {
 	  assert list != null : "Violation of: list is not null";
 	  
-	  //TODO do threshold instead
-	  //check the if the length is big enough to partition
+	  if(this.threshold() > list.size()) {
+	    	InsertionSort<T> simpleSort = new InsertionSort<>();
+	    	simpleSort.sort(list);
+	  }    
+	  
 	  if(right - left < 2) {
 		  if(right - left == 0)
 			  return left;
@@ -60,8 +63,6 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
 		  //it is a two item sorted array already
 		  return left;	  
 	  }
-		  
-		  
 	  
 	  T pivot = pivot(list, left, right);
 	  int pivotPostion = left;
@@ -148,6 +149,7 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
 
 	@Override
 	public int threshold() throws UnsupportedOperationException {
+		
 		  return quickSortThreshHold;
 	}
 
