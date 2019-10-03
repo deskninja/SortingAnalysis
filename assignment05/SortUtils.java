@@ -44,10 +44,13 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     assert 0 <= i && i < list.size() : "Violation of: i is a valid index";
     assert 0 <= j && j < list.size() : "Violation of: i is a valid index";
-
-    T temp = list.get(i);
-    list.set(i, list.get(j));
-    list.set(j, temp);
+    
+    if(i != j) {
+	    T temp = list.get(i);
+	    list.set(i, list.get(j));
+	    list.set(j, temp);
+    }
+	
   }
 
   /**
@@ -168,20 +171,12 @@ public final class SortUtils {
     assert sortRoutine != null : "Violation of: sortRoutine not null";
     assert list != null : "Violation of: list is not null";
     
-    List<Integer> copy = new ArrayList<>();
-    for(Integer item: list) {
-    	copy.add(item);
-    }
-
-    
     long start = System.nanoTime();
     sortRoutine.sort(list);
     long stop = System.nanoTime();
     long time = stop - start;
-    Collections.sort(copy);
     System.out.println("_________________________");
-    System.out.println(list.toString() + " sorted list");
-    System.out.println(copy.toString() + " Java Sorted");
+    System.out.println("sorted " + isSorted(list));
     System.out.println("_________________________");
        
     //this code doesn't work
@@ -241,13 +236,9 @@ public final class SortUtils {
 	    	out.println("The opperation took too long. ");
 	    }
 	    else {
-	    	if(time == -1) {
-	    		out.println("list was not sorted correctly");
-	    	}
-	    	else {
-	    		out.println("for array of size " + currentSize);
-	    		out.println("the opperation took " + time + " nanoSeconds");
-	    	}
+			out.println("for array of size " + currentSize);
+			out.println("the opperation took " + time + " nanoSeconds");
+		
 	    }
 	    
 	    out.println("=============================================");
