@@ -63,8 +63,9 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     boolean isSorted = true;
     int index = 0;
+    
     while(isSorted && index < list.size() - 1) {
-    	if(list.get(index).compareTo(list.get(index+1)) > 0)
+    	if(list.get(index).compareTo(list.get(index+1)) > 0) //if this item is less than the next item 
     		isSorted = false;
     	index++;
     }
@@ -179,11 +180,9 @@ public final class SortUtils {
     sortRoutine.sort(list);
     long stop = System.nanoTime();
     long time = stop - start;
-    Collections.sort(copy);
-    for(int i = 0; i < copy.size(); i++) {
-    	if(copy.get(i) != list.get(i))
-    		time = -1;
-    }
+    
+    if(!isSorted(list))
+    	time = -1;
     
     return time; 
   }
@@ -230,9 +229,11 @@ public final class SortUtils {
 	    else {
 	    	if(time == -1) {
 	    		out.println("list was not sorted correctly");
+	    		timeOut = true;
 	    	}
 	    	else {
 	    		out.println("the operation took " + time + " seconds");
+	    		out.println("list size " + currentSize);
 	    	}
 	    }
 	    
@@ -242,5 +243,40 @@ public final class SortUtils {
 	}
     
   }
+  
+  public static void generateTimingReport(Sorter<Integer> sortRoutine, int startSize, int sizeIncrement, int maxSize, int timeoutSec, int nothing) { //nothing allows the overload of the method
+	    assert startSize >= 0 : "Violation of: startSize >= 0";
+	    assert startSize <= maxSize : "Violation of: startSize <= maxSize";
+	    assert timeoutSec > 0 : "Violation of: timeoutSec > 0";
+	    assert sortRoutine != null : "Violation of: sortRoutine not null";
+	    int currentSize = startSize;
+	    long time = 0;
+	    boolean timeOut = false;
+		while(currentSize < maxSize && !timeOut) {
+		    SimpleWriter out = new SimpleWriter1L();
+		    
+		    time = testAndTime(sortRoutine, listOfRandomInts(currentSize));
+		    long secondsTime = time / 1_000_000_000; //get the time in seconds
+		    if(secondsTime >= timeoutSec) {
+		    	timeOut = true;
+		    	out.println("The operation took too long. ");
+		    }
+		    else {
+		    	if(time == -1) {
+		    		out.println("list was not sorted correctly");
+		    		timeOut = true;
+		    	}
+		    	else {
+		    		out.print(currentSize + "\t");
+				    out.println(time);
+		    	}
+		    }
+		    
+		    
+		    out.close();
+		    currentSize += sizeIncrement;
+		}
+	    
+	  }
 
 }
