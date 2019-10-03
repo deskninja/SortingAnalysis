@@ -13,7 +13,11 @@ import java.util.List;
  */
 public class InsertionSort<T extends Comparable<? super T>> extends AbstractSorter<T> {
 	
-	  public InsertionSort() {
+	  /**
+	 * sole constructor
+	 * sets complexity class and sets the name of the sorting algorythm 
+	 */
+	public InsertionSort() {
 	    this.name = "InsertionSort";
 	    this.complexity = ComplexityClass.NSQUARED;
 	  }
@@ -28,22 +32,21 @@ public class InsertionSort<T extends Comparable<? super T>> extends AbstractSort
 		T temp = list.get(index);
 		list.set(index, list.get(index + 1));
 		list.set(index + 1, temp);
-
 	}
 	
 	@Override	
 	public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
-
+    
     int currentIndex = 0;
 	boolean postionFound = false;
 	int compareIndex = 0;
 	
-	while(currentIndex + 1 < list.size()) { //until the last item in the array
+	while(currentIndex + 1 < list.size()) { 
 		postionFound = false;
 		compareIndex = currentIndex;
 		while(!postionFound) { //as long as the number is not sorted
-			if(list.get(compareIndex).compareTo(list.get(compareIndex + 1)) <= 0) //if the next number is less than the last one
+			if(list.get(compareIndex).compareTo(list.get(compareIndex + 1)) <= 0) 
 				postionFound = true;
 			else { //swap the two values
 				swapItems(compareIndex, list);

@@ -15,6 +15,9 @@ import java.util.Random;
  */
 public class QuickSortPivotRandom<T extends Comparable<? super T>> extends AbstractQuickSort<T> {
 	
+	/**
+	 * sole constructor
+	 */
 	public QuickSortPivotRandom() {
 		this.name = "QuickSortPivotRandom";
 		this.complexity = ComplexityClass.NLOGN;
@@ -25,8 +28,11 @@ public class QuickSortPivotRandom<T extends Comparable<? super T>> extends Abstr
 	protected T pivot(List<T> list, int start, int end) {
 		assert list != null : "Violation of: list is not null";
 		Random r = new Random();
+		//creates a new random number between {@code start} and {@code end}
 		int position = r.nextInt(end - start) + start;
+		//swap the element at the random postion with the element at postion start
 		SortUtils.swapElementsAt(list, start, position);
+		//return the location of the new pivot at position start
 		return list.get(start);
 	}
 }

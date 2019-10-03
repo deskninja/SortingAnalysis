@@ -16,6 +16,9 @@ import java.util.List;
 public class QuickSortPivotFirst<T extends Comparable<? super T>>
     extends AbstractQuickSort<T> {
 
+	/**
+	 * sole constructor
+	 */
 	public QuickSortPivotFirst() {
 		this.name = "QuickSortPivotFirst";
 	    this.complexity = ComplexityClass.NLOGN;
@@ -24,6 +27,7 @@ public class QuickSortPivotFirst<T extends Comparable<? super T>>
 
 	@Override
 	protected T pivot(List<T> list, int start, int end) {
+		//the pivot is the first item in this segment of the {@code list}
 		return list.get(start);
 	}
 	
