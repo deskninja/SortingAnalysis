@@ -47,4 +47,46 @@ public class SorterTests {
 		System.out.println(test.toString());
 		System.out.println(SortUtils.isSorted(test));
 	}
+	
+	@Test
+	public void testInsertionSort() {
+		InsertionSort<Integer> insertionSort = new InsertionSort<>();
+		SortUtils.generateTimingReport(insertionSort , 1, 1, 1_000, 1);
+	}
+	
+	@Test
+	public void testJavaBuiltInSort() {
+		JavaBuitInSort<Integer> javaBuiltInSort = new JavaBuitInSort<>();
+		SortUtils.generateTimingReport(javaBuiltInSort , 100, 10_000, 100_000, 1);
+	}
+	
+	@Test
+	public void testMergeSort() {
+		MergeSort<Integer> mergeSort = new MergeSort<>();
+		SortUtils.generateTimingReport(mergeSort , 1, 1, 100, 1);
+	}
+	
+	@Test
+	public void testQuickSortNaive() {
+		QuickSortNaive<Integer> quickSortNaive = new QuickSortNaive<>();
+		SortUtils.generateTimingReport(quickSortNaive , 1, 1, 100, 1);
+	}
+	
+	@Test
+	public void testQuickSortPivotFirst() {
+		QuickSortPivotFirst<Integer> quickSortPivotFirst = new QuickSortPivotFirst<>();
+		SortUtils.generateTimingReport(quickSortPivotFirst , 1, 1, 100, 1);
+	}
+	
+	@Test
+	public void testQuickSortPivotM3() {
+		QuickSortPivotM3<Integer> quickSortPivotM3 = new QuickSortPivotM3<>();
+		SortUtils.generateTimingReport(quickSortPivotM3 , 1, 1, 100, 1);
+	}
+	
+	@Test
+	public void testQuickSortPivotRandom() {
+		QuickSortPivotRandom<Integer> quickSortPivotRandom = new QuickSortPivotRandom<>();
+		SortUtils.generateTimingReport(quickSortPivotRandom , 1, 1, 100, 1, 0);
+	}
 }
