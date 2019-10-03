@@ -65,8 +65,5 @@ public class QuickSortPivotM3<T extends Comparable<? super T>> extends AbstractQ
 	  public int threshold() throws UnsupportedOperationException {
 		  return quickSortThreshHold;
 	  }
-	
-	  // TODO Override other methods if required
-	  // TODO Add private helper methods as needed
 
 }
