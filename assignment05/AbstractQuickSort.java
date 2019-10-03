@@ -60,8 +60,9 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
 		  return left;	  
 	  }
 		  
-	  
+	  System.out.println(list.toString() + " list before");
 	  T pivot = pivot(list, left, right);
+	  System.out.println(list.toString() + " list after");
 	  int pivotPostion = left;
 	  left++;
 	  
@@ -80,6 +81,7 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
 	  }
 	  if(list.get(left).compareTo(list.get(pivotPostion)) <= 0) {
 		  SortUtils.swapElementsAt(list, pivotPostion, left);
+		  return left;
 	  }
 	  
 	  else {
@@ -89,7 +91,7 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
 		  }
 	  }
 		  
-	  return left; 
+	  return pivotPostion; 
   }
 
   /**

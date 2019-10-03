@@ -44,13 +44,11 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     assert 0 <= i && i < list.size() : "Violation of: i is a valid index";
     assert 0 <= j && j < list.size() : "Violation of: i is a valid index";
-    
-    if(i != j) {
-	    T temp = list.get(i);
-	    list.set(i, list.get(j));
-	    list.set(j, temp);
+    if( i != j) {
+    T temp = list.get(i);
+    list.set(i, list.get(j));
+    list.set(j, temp);
     }
-	
   }
 
   /**
@@ -65,9 +63,10 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     boolean isSorted = true;
     int index = 0;
-    while(isSorted) {
+    while(isSorted && index < list.size() - 1) {
     	if(list.get(index).compareTo(list.get(index+1)) > 0)
     		isSorted = false;
+    	index++;
     }
 
     return isSorted; 
@@ -89,8 +88,7 @@ public final class SortUtils {
     Random rand = new Random();
 
     for(int i = 0; i < count; i++) {
-    	//int nextInt = rand.nextInt();
-    	int nextInt = (int) (Math.random() * 10);
+    	int nextInt = rand.nextInt();
     	listOfInts.add(nextInt);
     }
 
@@ -171,27 +169,22 @@ public final class SortUtils {
     assert sortRoutine != null : "Violation of: sortRoutine not null";
     assert list != null : "Violation of: list is not null";
     
+    List<Integer> copy = new ArrayList<>();
+    for(Integer item: list) {
+    	copy.add(item);
+    }
+
+    
     long start = System.nanoTime();
     sortRoutine.sort(list);
     long stop = System.nanoTime();
     long time = stop - start;
-    System.out.println("_________________________");
-    System.out.println("sorted " + isSorted(list));
-    System.out.println("_________________________");
-       
-    //this code doesn't work
-//    int nextInt = list.get(1);
-//    int index = 1;
-//    for(Integer i: list) {
-//    	if(nextInt < i)
-//    		time = -1;
-//    	index++;
-//    	if(index < list.size())
-//    		nextInt = list.get(index);
-//    }
-//    
-//    if(time == -1)
-//    	System.out.println(copy.toString() + " badly sorted");
+    Collections.sort(copy);
+    for(int i = 0; i < copy.size(); i++) {
+    	if(copy.get(i) != list.get(i))
+    		time = -1;
+    }
+    
     return time; 
   }
 
@@ -232,13 +225,15 @@ public final class SortUtils {
 	    long secondsTime = time / 1_000_000_000; //get the time in seconds
 	    if(secondsTime >= timeoutSec) {
 	    	timeOut = true;
-    		out.println("for array of size " + currentSize);
-	    	out.println("The opperation took too long. ");
+	    	out.println("The operation took too long. ");
 	    }
 	    else {
-			out.println("for array of size " + currentSize);
-			out.println("the opperation took " + time + " nanoSeconds");
-		
+	    	if(time == -1) {
+	    		out.println("list was not sorted correctly");
+	    	}
+	    	else {
+	    		out.println("the operation took " + time + " seconds");
+	    	}
 	    }
 	    
 	    out.println("=============================================");

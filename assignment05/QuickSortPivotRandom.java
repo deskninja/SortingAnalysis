@@ -25,7 +25,7 @@ public class QuickSortPivotRandom<T extends Comparable<? super T>> extends Abstr
 	protected T pivot(List<T> list, int start, int end) {
 		assert list != null : "Violation of: list is not null";
 		Random r = new Random();
-		int position = r.nextInt(list.size());
+		int position = r.nextInt(end - start) + start;
 		SortUtils.swapElementsAt(list, start, position);
 		return list.get(start);
 	}
