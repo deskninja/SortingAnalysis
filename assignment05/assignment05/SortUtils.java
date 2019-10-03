@@ -44,10 +44,11 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     assert 0 <= i && i < list.size() : "Violation of: i is a valid index";
     assert 0 <= j && j < list.size() : "Violation of: i is a valid index";
-
+    if( i != j) {
     T temp = list.get(i);
     list.set(i, list.get(j));
     list.set(j, temp);
+    }
   }
 
   /**
@@ -62,7 +63,7 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     boolean isSorted = true;
     int index = 0;
-    while(isSorted && index < list.size()) {
+    while(isSorted && index < list.size() - 1) {
     	if(list.get(index).compareTo(list.get(index+1)) > 0)
     		isSorted = false;
     	index++;

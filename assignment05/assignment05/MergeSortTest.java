@@ -12,7 +12,7 @@ public class MergeSortTest {
 	@Test
 	public void testMergeSort() {
 		MergeSort<Integer> mergeSort = new MergeSort<>();
-		SortUtils.generateTimingReport(mergeSort , 4, 10, 10_000, 1);
+		SortUtils.generateTimingReport(mergeSort , 4, 10, 100, 1);
 	}
 	
 	//change insertionSort to public to run this test
@@ -21,20 +21,25 @@ public class MergeSortTest {
 		List<String> list1 = new ArrayList<>();
 		list1.add("b");
 		list1.add("c");
+		list1.add("r");
 		list1.add("z");
+		
 		List<String> list2 = new ArrayList<>();	
 		list2.add("a");
 		list2.add("r");
 		list2.add("s");
+		list2.add("z");
 		MergeSort<String> sort = new MergeSort<>();
-		sort.insertionSort(list1, list2);
+		list1 = sort.insertionSort(list1, list2);
 		
 		List<String> result = new ArrayList<>();	
 		result.add("a");
 		result.add("b");
 		result.add("c");
 		result.add("r");
+		result.add("r");
 		result.add("s");
+		result.add("z");
 		result.add("z");
 		assertEquals(result, list1);
 	}

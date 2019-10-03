@@ -3,7 +3,7 @@ package assignment05;
 /**
  * Implementations of the common methods of the {@code Sorter} component.
  * 
- * @author Swaroop Joshi
+ * @author Jonathan Oliveros and Joshua Wells
  *
  * @param <T> type of elements of the collection to be sorted
  */
@@ -14,6 +14,7 @@ public abstract class AbstractSorter<T extends Comparable<? super T>>
    * Name of the sorter, e.g. "Insertion Sort".
    */
   protected String name;
+  
   /**
    * Complexity class, e.g., O(n^2), using the enum {@link ComplexityClass}.
    */

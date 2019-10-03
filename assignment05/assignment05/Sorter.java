@@ -5,11 +5,12 @@ import java.util.List;
 /**
  * The base interface for implementing various sorting algorithms.
  * 
- * @author Swaroop Joshi
+ * @author Joshua Wells and Jonathan Oliveros
  *
  * @param <T> type of elements of the collection to be sorted
  */
 public interface Sorter<T extends Comparable<? super T>> {
+	
   /**
    * Sorts the given list in the "increasing" order as defined by the
    * {@code Comparable} extended by {@code T}.

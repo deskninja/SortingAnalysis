@@ -8,14 +8,18 @@ import java.util.List;
  * 
  * This class must implement the {@code setThreshold, threshold} methods.
  * 
- * @author Swaroop Joshi
+ * @author Joshua Wells and Jonathan Oliveros
  *
  * @param <T> type of the element of the list this sorter can sort
  */
 public class QuickSortPivotRandom<T extends Comparable<? super T>>
     extends AbstractQuickSort<T> {
 
-  // TODO add constructor
+  public QuickSortPivotRandom() {
+	  	this.name = "QuickSortPivotRandom";
+	    this.complexity = ComplexityClass.NLOGN;
+	    this.setThreshold(40); //default threshold
+}
 
   @Override
   protected T pivot(List<T> list, int start, int end) {
