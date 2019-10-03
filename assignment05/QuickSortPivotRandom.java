@@ -29,8 +29,4 @@ public class QuickSortPivotRandom<T extends Comparable<? super T>> extends Abstr
 		SortUtils.swapElementsAt(list, start, position);
 		return list.get(start);
 	}
-
-	// TODO Override other methods if required
-	// TODO Add private helper methods as needed
-
 }

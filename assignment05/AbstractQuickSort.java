@@ -47,6 +47,7 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
   protected int partition(List<T> list, int left, int right) {
 	  assert list != null : "Violation of: list is not null";
 	  
+	  //TODO do threshold instead
 	  //check the if the length is big enough to partition
 	  if(right - left < 2) {
 		  if(right - left == 0)
@@ -60,9 +61,9 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
 		  return left;	  
 	  }
 		  
-	  System.out.println(list.toString() + " list before");
+		  
+	  
 	  T pivot = pivot(list, left, right);
-	  System.out.println(list.toString() + " list after");
 	  int pivotPostion = left;
 	  left++;
 	  

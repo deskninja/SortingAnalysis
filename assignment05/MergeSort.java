@@ -16,7 +16,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	
 	private int insertionSortThreshold;
 	
-	public List<T> insertionSort(List<T> list1, List<T> list2){
+	public List<T> merge(List<T> list1, List<T> list2){
 		boolean sorted = false;
 		int index = 0;
 		List<T> newArray = new ArrayList<>();
@@ -54,7 +54,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
     		
     		secondHalf = sortRecursive(secondHalf);
     		
-    		firstHalf = insertionSort(firstHalf, secondHalf);
+    		firstHalf = merge(firstHalf, secondHalf);
     		return firstHalf;
     	}
 		return list;
@@ -72,7 +72,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	public MergeSort() {
 		this.name = "MergeSort";
 	    this.complexity = ComplexityClass.NLOGN;
-	    insertionSortThreshold = 0; //default threshold
+	    insertionSortThreshold = 10; //default threshold
 	}
 
   @Override
@@ -90,6 +90,7 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
     	List<T> newList = new ArrayList<>();
     	newList = sortRecursive(list);
     	list = newList;
+    	System.out.println(list);
     }  
  }
   
