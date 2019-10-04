@@ -110,7 +110,7 @@ public final class SortUtils {
     assert count >= 0 : "Violation of count >= 0";
 
     List<Integer> sortedInts = new ArrayList<>();
-    for(int i = 1; i < i + 1; i++) {
+    for(int i = 0; i < count; i++) {
     	sortedInts.add(i);
     }
     return sortedInts; 

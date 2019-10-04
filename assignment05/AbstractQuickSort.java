@@ -138,16 +138,18 @@ public abstract class AbstractQuickSort<T extends Comparable<? super T>> extends
   @Override
   public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
-
-    int left = 0; //far right index of the list
-    int right = list.size()	- 1; //get the far left index of the list
-    if(list.size() != 1) { //if the array is bigger than size 1
-    	if(list.size() < this.threshold()) {
-        	InsertionSort<T> simpleSort = new InsertionSort<>();
-        	simpleSort.sort(list);
-        }
-    	//if the threshold is less than the list size quickSort
-    	quickSort(list, left, right); //quickSort the list
+    
+    if(list.size() != 0) {
+	    int left = 0; //far right index of the list
+	    int right = list.size()	- 1; //get the far left index of the list
+	    if(list.size() != 1) { //if the array is bigger than size 1
+	    	if(list.size() < this.threshold()) {
+	        	InsertionSort<T> simpleSort = new InsertionSort<>();
+	        	simpleSort.sort(list);
+	        }
+	    	//if the threshold is less than the list size quickSort
+	    	quickSort(list, left, right); //quickSort the list
+	    }
     }
   }
   

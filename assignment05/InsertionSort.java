@@ -38,24 +38,26 @@ public class InsertionSort<T extends Comparable<? super T>> extends AbstractSort
 	public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
     
-    int currentIndex = 0;
-	boolean postionFound = false;
-	int compareIndex = 0;
-	
-	while(currentIndex + 1 < list.size()) { 
-		postionFound = false;
-		compareIndex = currentIndex;
-		while(!postionFound) { //as long as the number is not sorted
-			if(list.get(compareIndex).compareTo(list.get(compareIndex + 1)) <= 0) 
-				postionFound = true;
-			else { //swap the two values
-				swapItems(compareIndex, list);
-				compareIndex--;
-				if(compareIndex < 0)
+    if(list.size() != 0) {
+	    int currentIndex = 0;
+		boolean postionFound = false;
+		int compareIndex = 0;
+		
+		while(currentIndex + 1 < list.size()) { 
+			postionFound = false;
+			compareIndex = currentIndex;
+			while(!postionFound) { //as long as the number is not sorted
+				if(list.get(compareIndex).compareTo(list.get(compareIndex + 1)) <= 0) 
 					postionFound = true;
+				else { //swap the two values
+					swapItems(compareIndex, list);
+					compareIndex--;
+					if(compareIndex < 0)
+						postionFound = true;
+				}
 			}
+			currentIndex++;
 		}
-		currentIndex++;
 	}
   }
 

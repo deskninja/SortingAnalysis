@@ -132,27 +132,26 @@ public class SorterTests {
 	
 	@Test
 	public void testThresholdGraphData() {
-		int thresholdAmount = 30;
-		MergeSort<Integer> mergeSort = new MergeSort<>();
+		int thresholdAmount = 1000;
+		JavaBuitInSort<Integer> javaBuiltIn = new JavaBuitInSort<>();
 		QuickSortPivotFirst<Integer> quickSortPivotFirst = new QuickSortPivotFirst<>();
 		QuickSortPivotM3<Integer> quickSortPivotM3 = new QuickSortPivotM3<>();
 		QuickSortPivotRandom<Integer> quickSortPivotRandom = new QuickSortPivotRandom<>();
 		
-		mergeSort.setThreshold(thresholdAmount);
 		quickSortPivotFirst.setThreshold(thresholdAmount);
 		quickSortPivotM3.setThreshold(thresholdAmount);
 		quickSortPivotRandom.setThreshold(thresholdAmount);
 		
-		SortUtils.generateTimingReport(quickSortPivotFirst , 2, 10, 100, 5, 0);
+		SortUtils.generateTimingReport(quickSortPivotFirst ,  1, 5_000_000, 100_000_001, 50, 0);
 		System.out.println();
 		System.out.println();
-		SortUtils.generateTimingReport(mergeSort , 2, 10, 100, 5, 0);
+		SortUtils.generateTimingReport(javaBuiltIn , 1, 5_000_000, 100_000_001, 50, 0);
 		System.out.println();
 		System.out.println();
-		SortUtils.generateTimingReport(quickSortPivotM3 , 2, 10, 100, 5, 0);
+		SortUtils.generateTimingReport(quickSortPivotM3 ,  1, 5_000_000, 100_000_001, 50, 0);
 		System.out.println();
 		System.out.println();
-		SortUtils.generateTimingReport(quickSortPivotRandom , 2, 10, 100, 5, 0);
+		SortUtils.generateTimingReport(quickSortPivotRandom , 1, 500_000, 10_000_001, 5, 0);
 	}
 	
 //tests for data type that is boolean rather than int on each sorting type
