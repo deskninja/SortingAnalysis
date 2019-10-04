@@ -108,11 +108,12 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
   public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
     
-    List<T> temp = new ArrayList<>();
-  	temp.addAll(sortRecursive(list));
-  	list.clear();
-  	list.addAll(temp);
-    
+    if(list.size() != 0) {
+	    List<T> temp = new ArrayList<>();
+	  	temp.addAll(sortRecursive(list));
+	  	list.clear();
+	  	list.addAll(temp);
+    }
  }
   
   @Override
