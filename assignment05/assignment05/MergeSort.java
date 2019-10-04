@@ -16,33 +16,53 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 	
 	private int insertionSortThreshold;
 	
-	public List<T> insertionSort(List<T> list1, List<T> list2){
+	/**
+	 * merges the second list into the first one
+	 * @param list1 a sorted List<T>
+	 * @param list2 a sorted List<T>
+	 * @return List<T> of size {@code list1} + {@code list2}
+	 */
+	public List<T> merge(List<T> list1, List<T> list2){
 		boolean sorted = false;
 		int index = 0;
-		List<T> newArray = new ArrayList<>();
-		for(T item: list1) {
-			newArray.add(item);
-		}
-		
+
 		for(T item: list2) {
 			while(!sorted) {
-				if(newArray.size() == index) {
-					newArray.add(item);
+				//if every item in list 2 will be greater than every item in list1
+				if(list1.size() == index) {
+					list1.add(item);
 					sorted = true;
 				}
-				else if(item.compareTo(newArray.get(index)) <= 0) {
-					newArray.add(index, item);
+				//if the item in {@code list2} is less than or equal to the item in {@code list1}
+				else if(item.compareTo(list1.get(index)) <= 0) {					
+					list1.add(index, item);
 					sorted = true;
 				}
+				//go to the next postion in {@code list1}
 				index++;
 			}
+			//reset sorted
 			sorted = false;
 		}
-		return newArray;
+		//return the sorted list
+		return list1;
 	}
 	
+	/**
+	 * merge sorts {@code list} using divide and conquer recursively
+	 * @param list is a List<T>
+	 * @return list sorted in ascending order
+	 */
 	private List<T> sortRecursive(List<T> list) {
-		if(list.size() > 1) {
+		//if the set threshold is greater than {@code list} size
+		if(this.threshold() > list.size()) {
+			//insertion sort {@code list}
+	    	InsertionSort<T> simpleSort = new InsertionSort<>();
+	    	simpleSort.sort(list);
+	    }
+		
+		//if the set threshold is less than {@code list} size
+		else if(list.size() > 1) {
     		List<T> firstHalf = new ArrayList<>(); //first half of {@code list}
     		firstHalf = partOfList(list, 0, list.size()/2);
     		
@@ -50,16 +70,22 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
     		List<T> secondHalf = new ArrayList<>(); //second half of {@code list}
     		secondHalf = partOfList(list, list.size()/2, list.size());
     		
-    		firstHalf = sortRecursive(firstHalf);
+    		firstHalf = sortRecursive(firstHalf); //recursively sort the first half of {@code list}
     		
-    		secondHalf = sortRecursive(secondHalf);
+    		secondHalf = sortRecursive(secondHalf); //recursively sort the second half of {@code list}
     		
-    		firstHalf = insertionSort(firstHalf, secondHalf);
-    		return firstHalf;
+    		return this.merge(firstHalf, secondHalf); //merge the two halves together
     	}
-		return list;
+		return list; //return the sorted list
 	}
 	
+	/**
+	 * Return part of a list from beginIndex (inclusive) to endIndex (exclusive)
+	 * @param list object type List<T>
+	 * @param beginIndex 
+	 * @param endIndex
+	 * @return half object type List<T> with all elements from indecies {@code beginIndex} (inclusive) to {@code endIndex} (exclusive)
+	 */
 	public List<T> partOfList(List<T> list, int beginIndex, int endIndex){
 		List<T> half = new ArrayList<>();
 		while(beginIndex < endIndex) {
@@ -69,6 +95,9 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
 		return half;
 	}
 
+	/**
+	 * sole constructor
+	 */
 	public MergeSort() {
 		this.name = "MergeSort";
 	    this.complexity = ComplexityClass.NLOGN;
@@ -79,18 +108,11 @@ public class MergeSort<T extends Comparable<? super T>> extends AbstractSorter<T
   public void sort(List<T> list) {
     assert list != null : "Violation of: list is not null";
     
-    //if the list is smaller than the threshold insertion sort it
-    if(this.threshold() >= list.size()) {
-    	InsertionSort<T> simpleSort = new InsertionSort<>();
-    	simpleSort.sort(list);
-    }
+    List<T> temp = new ArrayList<>();
+  	temp.addAll(sortRecursive(list));
+  	list.clear();
+  	list.addAll(temp);
     
-    //if the list is larger than the threshold merge sort it
-    else {
-    	List<T> newList = new ArrayList<>();
-    	newList = sortRecursive(list);
-    	list = newList;
-    }  
  }
   
   @Override

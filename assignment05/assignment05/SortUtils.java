@@ -63,12 +63,14 @@ public final class SortUtils {
     assert list != null : "Violation of: list is not null";
     boolean isSorted = true;
     int index = 0;
+    
     while(isSorted && index < list.size() - 1) {
-    	if(list.get(index).compareTo(list.get(index+1)) > 0)
+    	//if the first item is greater than the next in the list
+    	if(list.get(index).compareTo(list.get(index+1)) > 0) 
     		isSorted = false;
     	index++;
     }
-
+    
     return isSorted; 
   }
 
@@ -108,7 +110,7 @@ public final class SortUtils {
     assert count >= 0 : "Violation of count >= 0";
 
     List<Integer> sortedInts = new ArrayList<>();
-    for(int i = 1; i < i + 1; i++) {
+    for(int i = 1; i < count; i++) {
     	sortedInts.add(i);
     }
     return sortedInts; 
@@ -179,11 +181,9 @@ public final class SortUtils {
     sortRoutine.sort(list);
     long stop = System.nanoTime();
     long time = stop - start;
-    Collections.sort(copy);
-    for(int i = 0; i < copy.size(); i++) {
-    	if(copy.get(i) != list.get(i))
-    		time = -1;
-    }
+    
+    if(!isSorted(list))
+    	time = -1;
     
     return time; 
   }
@@ -223,6 +223,7 @@ public final class SortUtils {
 
 	    time = testAndTime(sortRoutine, listOfRandomInts(currentSize));
 	    long secondsTime = time / 1_000_000_000; //get the time in seconds
+	    //if the test took longer than timeoutSec
 	    if(secondsTime >= timeoutSec) {
 	    	timeOut = true;
 	    	out.println("The operation took too long. ");
@@ -230,9 +231,11 @@ public final class SortUtils {
 	    else {
 	    	if(time == -1) {
 	    		out.println("list was not sorted correctly");
+	    		timeOut = true;
 	    	}
 	    	else {
 	    		out.println("the operation took " + time + " seconds");
+	    		out.println("list size " + currentSize);
 	    	}
 	    }
 	    
@@ -242,5 +245,52 @@ public final class SortUtils {
 	}
     
   }
+  
+  /**
+   * Tests the sorting object and returns the number of items sorted and the time it took to sort them
+   * separated by a \t for a tab
+   * @param sortRoutine   sorter to be tested
+   * @param startSize     start size of the lists
+   * @param sizeIncrement how many elements to go up in each iteration
+   * @param maxSize       maximum size of the lists to be tested
+   * @param timeoutSec    if the last iteration of the test took more time than
+   *                      this number, don't do any more tests in this category
+   *                      (in seconds)
+ * @param nothing allows an overload of the method to print out a graphing friendly result
+ */
+public static void generateTimingReport(Sorter<Integer> sortRoutine, int startSize, int sizeIncrement, int maxSize, int timeoutSec, int nothing) { //nothing allows the overload of the method
+	    assert startSize >= 0 : "Violation of: startSize >= 0";
+	    assert startSize <= maxSize : "Violation of: startSize <= maxSize";
+	    assert timeoutSec > 0 : "Violation of: timeoutSec > 0";
+	    assert sortRoutine != null : "Violation of: sortRoutine not null";
+	    int currentSize = startSize;
+	    long time = 0;
+	    boolean timeOut = false;
+		while(currentSize < maxSize && !timeOut) {
+		    SimpleWriter out = new SimpleWriter1L();
+		    
+		    time = testAndTime(sortRoutine, listOfRandomInts(currentSize));
+		    long secondsTime = time / 1_000_000_000; //the time in seconds
+		    if(secondsTime >= timeoutSec) {
+		    	timeOut = true;
+		    	out.println("At " + currentSize + " size the operation took too long. ");
+		    }
+		    else {
+		    	if(time == -1) {
+		    		out.println("list was not sorted correctly");
+		    		timeOut = true;
+		    	}
+		    	else {
+		    		out.print(currentSize + "\t");
+				    out.println(time);
+		    	}
+		    }
+		    
+		    
+		    out.close();
+		    currentSize += sizeIncrement;
+		}
+	    
+	  }
 
 }

@@ -46,7 +46,4 @@ public abstract class AbstractSorter<T extends Comparable<? super T>>
         "This operation is not supported by " + this.name());
   }
 
-  // TODO Override other methods if required
-  // TODO Add private helper methods as needed
-
 }
